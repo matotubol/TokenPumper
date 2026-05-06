@@ -1,0 +1,71 @@
+rpc_url = "https://mainnet.helius-rpc.com/?api-key=2f6d8fb7-e3aa-42e9-90d3-72205c179f75"
+eater_amount = 2000000000
+debug = false
+validators_app_token = "UFyBUnZi87csAz47WwEhPTJb"
+shredstream_grpc_url = "https://frankfurt.mainnet.block-engine.jito.wtf"
+jito_keypair_path = "keys/jitoshreds.json"
+shredstream_advertise = "88.216.211.29:20000"
+shredstream_bind = "0.0.0.0:20000"
+shredstream_regions = ["frankfurt"]
+slot_stream_pin_core = 0
+
+# IPFS / Pinata (file is gitignored). Flip ipfs_debugmode while iterating
+# to avoid burning Pinata quota.
+pinata_jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzOTA3NWE4ZC0yYmU0LTQ0ODAtODgyMC05YmRmODYxZTdhNjMiLCJlbWFpbCI6Im1hdG90dWJvbEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJGUkExIn0seyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJOWUMxIn1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiOWNlZjZjODhiMWFkYzczMTM0NWEiLCJzY29wZWRLZXlTZWNyZXQiOiJhMDdhYzczZjBlMTE3NGYwMmI5ZWQzZmY5MzQ1MjBkNDdiZWZkZjY1MDc4MDNjMWViYTc5YjE5OGVlZDM0ZGFlIiwiZXhwIjoxODA5NDAwMzQ4fQ.z6H98T0Nba6eCt5vA9lw0DDP-OD3bsPrT6SQkgXSy-0"
+ipfs_debugmode = false
+ipfs_gateway = "https://ipfs.io/ipfs/"
+
+# Token roster (cache/tokens.json) controls what gets minted. With
+# token_debug = true we always launch the last roster entry (Testnet Taco
+# in the shipped roster) and never flip its is_used — handy for repeated
+# dry runs. With token_debug = false we walk top-to-bottom for the first
+# is_used == false entry, excluding the final slot so the debug sentinel
+# stays reusable. Image is sourced from `assets/{Symbol}.png`.
+token_debug = true
+
+# Creator (dev wallet) tx parameters — these apply ONLY to the dev's
+# launch tx (create_v2 + buy + ATA + tip) and dev sell-all tx. Each
+# `[[accounts]]` entry below has its OWN `cu_price_lamports` for its buy.
+# Buy size is in lamports (0.1 SOL = 100_000_000). cu_limit ~210k covers
+# create_v2 + dev buy + ATA idempotent; sell-only is much smaller and
+# uses cu_sell_limit. Priority fees in micro-lamports per CU — tune the
+# buy/sell sides independently for landing probability.
+buy_sol_lamports = 1000000000
+cu_limit = 250000
+creator_cu_buy_price_lamports = 100000
+creator_cu_sell_price_lamports = 100000
+
+# Global CU limits for "normal" (non-create_v2) txs. cu_sell_limit
+# applies to the dev sell-all (4 ixs); cu_buy_limit is reserved for
+# per-account buy txs.
+cu_buy_limit = 95000
+cu_sell_limit = 95000
+
+# node1 QUIC submitter. node1_api_key is a 36-char UUID — leave it
+# unset (or run with debug=true) to skip the QUIC connection. Tip is
+# baked into the launch tx as a final System::Transfer ix; node1's
+# minimum is 0.001 SOL = 1_000_000 lamports, higher = better landing.
+node1_endpoint = "fra.node1.me:16666"
+node1_server_name = "fra.node1.me"
+node1_api_key = "e5081740-226a-472e-9118-80bae60d014b"
+node1_tip_lamports = 1000000
+
+# Yellowstone gRPC subscription for the bonding-curve account.
+# Subscribes to the deterministic PDA at startup (before create_v2 lands)
+# and logs `tracked reserves` lines on every reserves write. Leave
+# either field unset to disable.
+curve_sub_endpoint = "https://martinb-mainnet-cfe2.mainnet.rpcpool.com:443"
+curve_sub_x_token = "98ce410c-bfaf-4909-a037-dee88df1b5d5"
+curve_sub_ping_interval_secs = 25
+
+[[accounts]]
+index = 1
+amount = 505000000
+cu_price_lamports = 510000
+
+[[accounts]]
+index = 2
+amount = 305000000
+cu_price_lamports = 311000
+
+

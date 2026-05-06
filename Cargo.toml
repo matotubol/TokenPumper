@@ -1,0 +1,31 @@
+[package]
+name = "token_pumper"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+rand_core = { version = "0.6", features = ["getrandom"] }
+bs58 = "0.5"
+toml = "0.8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "signal", "time", "sync"] }
+reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls", "blocking", "multipart"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tonic = { version = "0.12", features = ["transport", "tls", "tls-webpki-roots"] }
+prost = "0.13"
+prost-types = "0.13"
+arc-swap = "1"
+core_affinity = "0.8"
+socket2 = "0.5"
+libc = "0.2"
+sha2 = "0.10"
+base64 = "0.21"
+quinn = "0.11"
+rustls = { version = "0.23", default-features = false, features = ["ring"] }
+
+[build-dependencies]
+tonic-build = "0.12"
